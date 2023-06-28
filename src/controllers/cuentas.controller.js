@@ -76,18 +76,31 @@ export const registroUsuario = async function (req, res) {
   }
 };
 
+export const verificarCuentaGet = async function (req, res) {
+  const { cuentaDestino } = req.body;
+
+  const [ro] = await pool.query(
+    `SELECT cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE idCuenta=?`,
+    [cuentaDestino]
+  );
+
+  res.send(ro);
+};
+
 export const transferecniasPost = async function (req, res) {
   const { cuentaOrigen, monto, cuentaDestino } = req.body;
 
-  const [rows] = await pool.query(`SELECT monto FROM cuentas where id=?`, [
-    cuentaOrigen,
-  ]);
-  await pool.query(`UPDATE cuentas SET monto= monto-? WHERE id = ? `, [
+  const [rows] = await pool.query(
+    `SELECT monto FROM cuentas where idCuenta=?`,
+    [cuentaOrigen]
+  );
+
+  await pool.query(`UPDATE cuentas SET monto= monto-? WHERE idCuenta = ? `, [
     monto,
     cuentaOrigen,
   ]);
 
-  await pool.query(`UPDATE cuentas SET monto = monto +? WHERE id =?;`, [
+  await pool.query(`UPDATE cuentas SET monto = monto +? WHERE idCuentas =?;`, [
     monto,
     cuentaDestino,
   ]);
