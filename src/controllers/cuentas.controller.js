@@ -77,11 +77,10 @@ export const registroUsuario = async function (req, res) {
 };
 
 export const verificarCuentaGet = async function (req, res) {
-  const { cuentaDestino } = req.body;
-
+  const id = req.params.id;
   const [ro] = await pool.query(
     `SELECT cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE idCuenta=?`,
-    [cuentaDestino]
+    [id]
   );
 
   res.send(ro);

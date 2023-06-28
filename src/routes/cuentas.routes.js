@@ -10,6 +10,6 @@ const router = Router();
 router.get("/cuentas", cuentaGet);
 router.patch("/cuentas", transferecniasPost);
 router.post("/cuentas", registroUsuario);
-router.get("/verificarCuenta", verificarCuentaGet);
+router.get("/verificarCuenta/:id", verificarCuentaGet);
 
 export default router;
