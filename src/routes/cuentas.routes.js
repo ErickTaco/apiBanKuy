@@ -7,7 +7,7 @@ import {
 } from "../controllers/cuentas.controller.js";
 
 const router = Router();
-router.get("/cuentas", cuentaGet);
+router.get("/cuentas/:correo/:password", cuentaGet);
 router.patch("/cuentas", transferecniasPost);
 router.post("/cuentas", registroUsuario);
 router.get("/verificarCuenta/:id", verificarCuentaGet);

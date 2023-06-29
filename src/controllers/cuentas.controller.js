@@ -1,8 +1,21 @@
 import { pool } from "../db.js";
 
 export const cuentaGet = async function (req, res) {
+  const correo = req.params.correo;
+  const password = req.params.password;
+
+  const [login] = await pool.query(
+    "SELECT idCliente FROM login WHERE correo=? AND password=?",
+    [correo, password]
+  );
+
+  let idCliente = login.map((registro) => registro.idCliente);
+  let idClientee = idCliente[0];
+  console.log(idClientee);
+
   const [we] = await pool.query(
-    "SELECT cuentas.monto, cuentas.idCuenta, cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente"
+    "SELECT cuentas.monto, cuentas.idCuenta, cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
+    [idClientee]
   );
   res.send(we);
 };
