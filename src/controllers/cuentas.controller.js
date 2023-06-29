@@ -23,7 +23,7 @@ export const cuentaGet = async function (req, res) {
     );
     res.send(we);
   } else {
-    res.status(404).json({ mesanje: "su cuenta esta inactiva " });
+    res.send("su cuenta esta inactiva ");
   }
 };
 
