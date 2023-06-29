@@ -17,7 +17,7 @@ export const cuentaGet = async function (req, res) {
   console.log(estadoClientee);
 
   if (estadoClientee == 0) {
-    res.send(["incativo"]);
+    res.send({});
   } else {
     const [we] = await pool.query(
       "SELECT cuentas.monto, cuentas.idCuenta, cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
