@@ -3,9 +3,8 @@ import { pool } from "../db.js";
 export const cuentaGet = async function (req, res) {
   const correo = req.params.correo;
   const password = req.params.password;
-
   const [login] = await pool.query(
-    "SELECT idCliente FROM login WHERE correo=? AND password=?",
+    "SELECT idCliente,estadoCliente FROM login WHERE correo=? AND password=?",
     [correo, password]
   );
 
@@ -13,11 +12,19 @@ export const cuentaGet = async function (req, res) {
   let idClientee = idCliente[0];
   console.log(idClientee);
 
-  const [we] = await pool.query(
-    "SELECT cuentas.monto, cuentas.idCuenta, cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
-    [idClientee]
-  );
-  res.send(we);
+  let estadoCliente = login.map((registro) => registro.estadoCliente);
+  let estadoClientee = estadoCliente[0];
+  console.log(estadoClientee);
+
+  if (estadoClientee == 1) {
+    const [we] = await pool.query(
+      "SELECT cuentas.monto, cuentas.idCuenta, cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
+      [idClientee]
+    );
+    res.send(we);
+  } else {
+    res.status(404).json({ mesanje: "su cuenta esta inactiva " });
+  }
 };
 
 export const registroUsuario = async function (req, res) {
