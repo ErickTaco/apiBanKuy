@@ -22,8 +22,6 @@ export const cuentaGet = async function (req, res) {
       [idClientee]
     );
     res.send(we);
-  } else {
-    res.send("inactiva");
   }
 };
 
