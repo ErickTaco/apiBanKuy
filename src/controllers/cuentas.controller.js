@@ -1,5 +1,19 @@
 import { pool } from "../db.js";
 
+export const login = async function (req, res) {
+  const correo = req.params.correo;
+  const password = req.params.password;
+  const [login] = await pool.query(
+    "SELECT idCliente,estadoCliente FROM login WHERE correo=? AND password=?",
+    [correo, password]
+  );
+
+  let idCliente = login.map((registro) => registro.idCliente);
+  let idClientee = idCliente[0];
+  console.log(idClientee);
+  res.send(idClientee);
+};
+
 export const cuentaGet = async function (req, res) {
   const correo = req.params.correo;
   const password = req.params.password;

@@ -1,13 +1,15 @@
 import { Router } from "express";
 import {
   cuentaGet,
+  login,
   registroUsuario,
   transferecniasPost,
   verificarCuentaGet,
 } from "../controllers/cuentas.controller.js";
 
 const router = Router();
-router.get("/cuentas/:correo/:password", cuentaGet);
+router.get("/login/:correo/:password", login);
+
 router.patch("/cuentas", transferecniasPost);
 router.post("/cuentas", registroUsuario);
 router.get("/verificarCuenta/:id", verificarCuentaGet);
