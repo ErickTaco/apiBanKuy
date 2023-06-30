@@ -11,7 +11,7 @@ export const login = async function (req, res) {
   let idCliente = login.map((registro) => registro.idCliente);
   let idClientee = idCliente[0];
   console.log(idClientee);
-  res.send(idClientee);
+  res.send([idClientee]);
 };
 
 export const cuentaGet = async function (req, res) {
