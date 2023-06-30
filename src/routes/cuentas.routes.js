@@ -11,7 +11,7 @@ const router = Router();
 router.get("/login/:correo/:password", login);
 router.get("/cuentas/:idCliente", cuentaGet);
 
-router.patch("/cuentas", transferecniasPost);
+router.put("/cuentas", transferecniasPost);
 router.post("/cuentas", registroUsuario);
 router.get("/verificarCuenta/:id", verificarCuentaGet);
 
