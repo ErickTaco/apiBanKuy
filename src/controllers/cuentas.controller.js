@@ -123,17 +123,12 @@ export const verificarCuentaGet = async function (req, res) {
 export const transferecniasPost = async function (req, res) {
   const { cuentaOrigen, monto, cuentaDestino } = req.body;
 
-  const [rows] = await pool.query(
-    `SELECT monto FROM cuentas where idCuenta=?`,
-    [cuentaOrigen]
-  );
-
-  await pool.query(`UPDATE cuentas SET monto= monto-? WHERE idCuenta = ? `, [
+  await pool.query(`UPDATE cuentas SET monto= monto - ? WHERE idCuenta = ? `, [
     monto,
     cuentaOrigen,
   ]);
 
-  await pool.query(`UPDATE cuentas SET monto = monto +? WHERE idCuentas =?;`, [
+  await pool.query(`UPDATE cuentas SET monto = monto +? WHERE idCuenta =?;`, [
     monto,
     cuentaDestino,
   ]);
