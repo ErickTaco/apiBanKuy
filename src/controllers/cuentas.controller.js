@@ -11,24 +11,28 @@ export const login = async function (req, res) {
   let idCliente = login.map((registro) => registro.idCliente);
   let idClientee = idCliente[0];
   console.log(idClientee);
-  res.send([{ idCliente: idClientee }]);
+
+  let estadoCliente = login.map((registro) => registro.estadoCliente);
+  let estadoClientee = estadoCliente[0];
+  console.log(estadoClientee);
+
+  if (estadoClientee == 0) {
+    res.send("");
+  } else {
+    res.send([{ idCliente: idClientee }]);
+  }
 };
 
 export const cuentaGet = async function (req, res) {
   const idCliente = req.params.idCliente;
+  console.log(idCliente);
+  console.log(0);
+
   //const password = req.params.password;
   //const [login] = await pool.query(
   //"SELECT idCliente,estadoCliente FROM login WHERE correo=? AND password=?",
   //[correo, password]
   //);
-
-  //let idCliente = login.map((registro) => registro.idCliente);
-  //let idClientee = idCliente[0];
-  //console.log(idClientee);
-
-  //let estadoCliente = login.map((registro) => registro.estadoCliente);
-  //let estadoClientee = estadoCliente[0];
-  //console.log(estadoClientee);
 
   const [we] = await pool.query(
     "SELECT cuentas.monto, cuentas.idCuenta, cliente.nombre, cliente.primerApellido, cliente.segundoApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
