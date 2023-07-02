@@ -132,5 +132,42 @@ export const transferecniasPost = async function (req, res) {
     monto,
     cuentaDestino,
   ]);
+
+  await pool.query(
+    "insert into transaccionsalida(idCuentaOrigen,idCuentaDestino,monto,idTipo) values(?,?,?,?) ",
+    [cuentaOrigen, cuentaDestino, monto, "sallida"]
+  );
+  const [idTransferecia] = await pool.query(
+    "SELECT LAST_INSERT_ID() as idTransaccion FROM transaccionsalida LIMIT 1"
+  );
+
+  let mapIdUsers = idTransferecia.map((registro) => registro.idTransaccion);
+  let id = mapIdUsers[0];
+  console.log(id);
+
+  await pool.query(
+    "insert into transaccionentrada(idTransaccion,idCuentaOrigen,idCuentaDestino,monto,idTipo) values(?,?,?,?,?)",
+    [id, cuentaOrigen, cuentaDestino, monto, "entrada"]
+  );
+
   res.send("ecitoso");
+};
+
+export const historialTransferreciasCliente = async function (req, res) {
+  const idCliente = req.params.idCliente;
+  const tipo = req.params.tipo;
+
+  if (tipo == "entrada") {
+    const [respuesta] = await pool.query(
+      "select * from transaccionentrada where 	idCuentaDestino=?",
+      [idCliente]
+    );
+    res.send(respuesta);
+  } else if (tipo == "salida") {
+    const [respuesta] = await pool.query(
+      "select * from transaccionentrada where idCuentaOrigen=?",
+      [idCliente]
+    );
+    res.send(respuesta);
+  }
 };
