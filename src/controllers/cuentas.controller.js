@@ -121,7 +121,7 @@ export const verificarCuentaGet = async function (req, res) {
 };
 
 export const transferecniasPost = async function (req, res) {
-  const { cuentaOrigen, monto, cuentaDestino } = req.body;
+  const { cuentaOrigen, monto, cuentaDestino, banco } = req.body;
 
   await pool.query(`UPDATE cuentas SET monto= monto - ? WHERE idCuenta = ? `, [
     monto,
@@ -134,8 +134,8 @@ export const transferecniasPost = async function (req, res) {
   ]);
 
   await pool.query(
-    "insert into transaccionsalida(idCuentaOrigen,idCuentaDestino,monto,idTipo) values(?,?,?,?) ",
-    [cuentaOrigen, cuentaDestino, monto, "sallida"]
+    "insert into transaccionsalida(idCuentaOrigen,idCuentaDestino,monto,idTipo,banco) values(?,?,?,?,?) ",
+    [cuentaOrigen, cuentaDestino, monto, "sallida", banco]
   );
   const [idTransferecia] = await pool.query(
     "SELECT LAST_INSERT_ID() as idTransaccion FROM transaccionsalida LIMIT 1"
@@ -172,14 +172,12 @@ export const historialTransferreciasCliente = async function (req, res) {
   }
 };
 
-
-export const perfil =async function(req,res){
+export const perfil = async function (req, res) {
   const idCliente = req.params.idCliente;
 
-
-   const [perfil] = await pool.query(
+  const [perfil] = await pool.query(
     "SELECT cliente.nombre,cliente.primerApellido,cliente.cedula,cliente.correoElectronico FROM cliente INNER JOIN cuentas ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
     [idCliente]
   );
-  res.send(perfil)
-}
+  res.send(perfil);
+};
