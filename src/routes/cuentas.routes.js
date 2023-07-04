@@ -18,7 +18,7 @@ router.get("/transacciones/:idCliente/:tipo", historialTransferreciasCliente);
 
 router.post("/cuentas", registroUsuario);
 router.get("/verificarCuenta/:id", verificarCuentaGet);
-router.get("/perfil/:idCuenta", perfil);
+router.get("/perfil/:idCliente", perfil);
 
 
 export default router;
