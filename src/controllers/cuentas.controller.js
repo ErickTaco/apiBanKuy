@@ -120,6 +120,20 @@ export const verificarCuentaGet = async function (req, res) {
   res.send(ro);
 };
 
+export const transaccionesInterbancarias = async function (req, res) {
+  const { cuentaOrigen, monto, cuentaDestino, banco } = req.body;
+
+  await pool.query(`UPDATE cuentas SET monto= monto - ? WHERE idCuenta = ? `, [
+    monto,
+    cuentaOrigen,
+  ]);
+  await pool.query(
+    "insert into transaccionsalida(idCuentaOrigen,idCuentaDestino,monto,idTipo,banco) values(?,?,?,?,?) ",
+    [cuentaOrigen, cuentaDestino, monto, "sallida", banco]
+  );
+  res.send("ecitoso");
+};
+
 export const transferecniasPost = async function (req, res) {
   const { cuentaOrigen, monto, cuentaDestino, banco } = req.body;
 
