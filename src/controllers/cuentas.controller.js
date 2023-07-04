@@ -171,3 +171,7 @@ export const historialTransferreciasCliente = async function (req, res) {
     res.send(respuesta);
   }
 };
+
+
+export const perfil =async function(req,res){
+}
