@@ -1,5 +1,5 @@
 import { pool } from "../db.js";
-
+import { transporter } from "../email.js";
 export const login = async function (req, res) {
   const correo = req.params.correo;
   const password = req.params.password;
@@ -20,6 +20,19 @@ export const login = async function (req, res) {
     res.send("");
   } else {
     res.send([{ idCliente: idClientee }]);
+
+    try {
+      await transporter.sendMail({
+        from: '"Inicio" <bancuy1534@gmail.com>', // sender address
+        to: correo, // list of receivers
+        subject: "Hello ✔", // Subject line
+        html: `
+        <b>Hola como estas mi vida </b>
+        `,
+      });
+    } catch (error) {
+      emailStatus = error;
+    }
   }
 };
 
