@@ -3,6 +3,7 @@ import {
   cuentaGet,
   historialTransferreciasCliente,
   login,
+  perfil,
   registroUsuario,
   transferecniasPost,
   verificarCuentaGet,
@@ -17,5 +18,7 @@ router.get("/transacciones/:idCliente/:tipo", historialTransferreciasCliente);
 
 router.post("/cuentas", registroUsuario);
 router.get("/verificarCuenta/:id", verificarCuentaGet);
+router.get("/perfil/:id", perfil);
+
 
 export default router;

@@ -174,4 +174,12 @@ export const historialTransferreciasCliente = async function (req, res) {
 
 
 export const perfil =async function(req,res){
+  const idCliente = req.params.idCliente;
+
+
+   const [perfil] = await pool.query(
+    "SELECT nombre,primerApellido,cedula,correoElectronico FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=? ",
+    [idCliente]
+  );
+  res.send(perfil)
 }
