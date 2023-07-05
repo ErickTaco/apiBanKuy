@@ -177,7 +177,7 @@ export const transferecniasPost = async function (req, res) {
 
   await pool.query(
     "insert into transaccionsalida(idCuentaOrigen,idCuentaDestino,monto,idTipo,banco) values(?,?,?,?,?) ",
-    [cuentaOrigen, cuentaDestino, monto, "sallida", banco]
+    [cuentaOrigen, cuentaDestino, monto, "salida", banco]
   );
   const [idTransferecia] = await pool.query(
     "SELECT LAST_INSERT_ID() as idTransaccion FROM transaccionsalida LIMIT 1"
@@ -191,7 +191,11 @@ export const transferecniasPost = async function (req, res) {
     "insert into transaccionentrada(idTransaccion,idCuentaOrigen,idCuentaDestino,monto,idTipo) values(?,?,?,?,?)",
     [id, cuentaOrigen, cuentaDestino, monto, "entrada"]
   );
+  res.send("ecitoso");
+
 };
+
+
 
 export const historialTransferreciasCliente = async function (req, res) {
   const idCliente = req.params.idCliente;
