@@ -23,7 +23,7 @@ export const login = async function (req, res) {
 
     try {
       await transporter.sendMail({
-        from: '"Inicio" <bancuy1534@gmail.com>', // sender address
+        from: '"BanCuy" <bancuy1534@gmail.com>', // sender address
         to: correo, // list of receivers
         subject: "Notificacion ✔", // Subject line
         html: `
