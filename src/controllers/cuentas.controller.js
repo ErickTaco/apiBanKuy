@@ -25,9 +25,9 @@ export const login = async function (req, res) {
       await transporter.sendMail({
         from: '"Inicio" <bancuy1534@gmail.com>', // sender address
         to: correo, // list of receivers
-        subject: "Hello ✔", // Subject line
+        subject: "Notificacion ✔", // Subject line
         html: `
-        <b>Hola como estas mi vida </b>
+        <b><center> Ingresaste a tu BanCuy</center> </b>
         `,
       });
     } catch (error) {
