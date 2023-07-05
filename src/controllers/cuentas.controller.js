@@ -117,6 +117,21 @@ export const registroUsuario = async function (req, res) {
     );
 
     res.send("d");
+    try {
+      await transporter.sendMail({
+        from: '"BanCuy" <bancuy1534@gmail.com>', // sender address
+        to: correoElectronico, // list of receivers
+        subject: "Notificacion ✔", // Subject line
+        html: `
+        <b><center> Registro a tu BanCuy</center> </b><br>
+         <b>Usario: ${correoElectronico}</b> <br>
+         <b>Contraseñia: ${cedula}</b> <br>
+
+        `,
+      });
+    } catch (error) {
+      emailStatus = error;
+    }
   } else {
     console.log("correo electronico ya registrado");
     res.status(404).json({ mesanje: "correo electronico ya registradonpm" });
@@ -176,8 +191,6 @@ export const transferecniasPost = async function (req, res) {
     "insert into transaccionentrada(idTransaccion,idCuentaOrigen,idCuentaDestino,monto,idTipo) values(?,?,?,?,?)",
     [id, cuentaOrigen, cuentaDestino, monto, "entrada"]
   );
-
-  res.send("ecitoso");
 };
 
 export const historialTransferreciasCliente = async function (req, res) {
