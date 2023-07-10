@@ -33,6 +33,7 @@ export const login = async function (req, res) {
     } catch (error) {
       emailStatus = error;
     }
+    
   }
 };
 
