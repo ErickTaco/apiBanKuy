@@ -156,12 +156,16 @@ export const transaccionesInterbancarias = async function (req, res) {
     monto,
     cuentaOrigen,
   ]);
+
   await pool.query(
-    "insert into transaccionsalida(idCuentaOrigen,idCuentaDestino,monto,idTipo,banco) values(?,?,?,?,?) ",
-    [cuentaOrigen, cuentaDestino, monto, "sallida", banco]
+    "insert into transaccionesinterbancarias(idCuentaOrigen,idCuentaDestino,monto,idTipo,banco) values(?,?,?,?,?) ",
+    [cuentaOrigen, cuentaDestino, monto, "salida", banco]
   );
   res.send("ecitoso");
 };
+
+
+
 
 export const transferecniasPost = async function (req, res) {
   const { cuentaOrigen, monto, cuentaDestino, banco } = req.body;
