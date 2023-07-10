@@ -164,9 +164,6 @@ export const transaccionesInterbancarias = async function (req, res) {
   res.send("ecitoso");
 };
 
-
-
-
 export const transferecniasPost = async function (req, res) {
   const { cuentaOrigen, monto, cuentaDestino, banco } = req.body;
 
@@ -208,7 +205,7 @@ export const historialTransferreciasCliente = async function (req, res) {
 
   if (tipo == "entrada") {
     const [respuesta] = await pool.query(
-      "select * from transaccionentrada where 	idCuentaDestino=?",
+      "select transaccionentrada.idTransaccion,transaccionentrada.idCuentaOrigen,cliente.nombre,cliente.primerApellido,transaccionentrada.monto,transaccionentrada.fechaTransaccionfrom transaccionentradaINNER JOIN cuentas ON cuentas.idCuenta = transaccionentrada.idCuentaOrigenINNER JOIN cliente ON cliente.idCliente=cuentas.idClienteWHERE transaccionentrada.idCuentaDestino=?",
       [idCliente]
     );
     res.send(respuesta);
