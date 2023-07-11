@@ -33,7 +33,6 @@ export const login = async function (req, res) {
     } catch (error) {
       emailStatus = error;
     }
-    
   }
 };
 
@@ -194,10 +193,7 @@ export const transferecniasPost = async function (req, res) {
     [id, cuentaOrigen, cuentaDestino, monto, "entrada"]
   );
   res.send("ecitoso");
-
 };
-
-
 
 export const historialTransferreciasCliente = async function (req, res) {
   const idCliente = req.params.idCliente;
@@ -205,7 +201,7 @@ export const historialTransferreciasCliente = async function (req, res) {
 
   if (tipo == "entrada") {
     const [respuesta] = await pool.query(
-      "select transaccionentrada.idTransaccion,transaccionentrada.idCuentaOrigen,cliente.nombre,cliente.primerApellido,transaccionentrada.monto,transaccionentrada.fechaTransaccion from transaccionentrada INNER JOIN cuentas ON cuentas.idCuenta = transaccionentrada.idCuentaOrigen INNER JOIN cliente ON cliente.idCliente=cuentas.idCliente WHERE transaccionentrada.idCuentaDestino=?",
+      "select transaccionentrada.idTransaccion,transaccionentrada.idCuentaOrigen,transaccionentrada.idCuentaDestino,cliente.nombre,cliente.primerApellido,transaccionentrada.monto,transaccionentrada.fechaTransaccion from transaccionentrada INNER JOIN cuentas ON cuentas.idCuenta = transaccionentrada.idCuentaOrigen INNER JOIN cliente ON cliente.idCliente=cuentas.idCliente WHERE transaccionentrada.idCuentaDestino=?",
       [idCliente]
     );
     res.send(respuesta);
