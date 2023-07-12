@@ -207,7 +207,7 @@ export const historialTransferreciasCliente = async function (req, res) {
     res.send(respuesta);
   } else if (tipo == "salida") {
     const [respuesta] = await pool.query(
-      "select transaccionentrada.idTransaccion,transaccionentrada.idCuentaOrigen,transaccionentrada.idCuentaDestino AS idCuentaDestino,(SELECT cliente.nombre FROM transaccionentrada INNER JOIN cuentas ON cuentas.idCuenta = transaccionentrada.idCuentaOrigen INNER JOIN cliente ON cliente.idCliente=cuentas.idCliente WHERE idCuentaDestino=idCuentaDestino LIMIT 1)as nombre ,cliente.primerApellido,transaccionentrada.monto,transaccionentrada.fechaTransaccion from transaccionentrada INNER JOIN cuentas ON cuentas.idCuenta = transaccionentrada.idCuentaOrigen INNER JOIN cliente ON cliente.idCliente=cuentas.idCliente WHERE transaccionentrada.idCuentaOrigen=?",
+      "select transaccionentrada.idTransaccion,transaccionentrada.idCuentaOrigen, transaccionentrada.idCuentaDestino AS idcuentaDestino, (SELECT cliente.nombre FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cuentas.idCuenta=idcuentaDestino) AS nombre,(SELECT cliente.primerApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cuentas.idCuenta=idcuentaDestino) AS primerApellido,transaccionentrada.monto, transaccionentrada.fechaTransaccion from transaccionentrada WHERE transaccionentrada.idCuentaOrigen=?",
       [idCliente]
     );
     res.send(respuesta);
