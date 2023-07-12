@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  actulizarInformacion,
   cuentaGet,
   historialTransferreciasCliente,
   login,
@@ -16,6 +17,7 @@ router.get("/cuentas/:idCliente", cuentaGet);
 
 router.put("/cuentas", transferecniasPost);
 router.put("/cuentas2", transaccionesInterbancarias);
+router.put("/actulizarDatos/:idCliente", actulizarInformacion);
 
 router.get("/transacciones/:idCliente/:tipo", historialTransferreciasCliente);
 
