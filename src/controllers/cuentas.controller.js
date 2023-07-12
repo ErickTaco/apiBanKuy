@@ -220,3 +220,19 @@ export const perfil = async function (req, res) {
   );
   res.send(perfil);
 };
+
+export const actulizarInformacion = async function (req, res) {
+  const idCliente = req.params.idCliente;
+  const { celular, correoElectronico } = req.body;
+  await pool.query(
+    `UPDATE cliente SET celular = ?, correoElectronico =? WHERE cliente.idCliente = ?`,
+    [celular, correoElectronico, idCliente]
+  );
+
+  await pool.query(`UPDATE login SET correo = ? WHERE login.idCliente  = ?`, [
+    correoElectronico,
+    idCliente,
+  ]);
+
+  res.send("ecitoso");
+};
