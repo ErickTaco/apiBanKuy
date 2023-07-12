@@ -7,15 +7,12 @@ export const login = async function (req, res) {
     "SELECT idCliente,estadoCliente FROM login WHERE correo=? AND password=?",
     [correo, password]
   );
-
   let idCliente = login.map((registro) => registro.idCliente);
   let idClientee = idCliente[0];
   console.log(idClientee);
-
   let estadoCliente = login.map((registro) => registro.estadoCliente);
   let estadoClientee = estadoCliente[0];
   console.log(estadoClientee);
-
   if (estadoClientee == 0) {
     res.send("");
   } else {
@@ -218,7 +215,7 @@ export const perfil = async function (req, res) {
   const idCliente = req.params.idCliente;
 
   const [perfil] = await pool.query(
-    "SELECT cliente.nombre,cliente.primerApellido,cliente.cedula,cliente.correoElectronico FROM cliente INNER JOIN cuentas ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
+    "SELECT cliente.nombre,cliente.primerApellido,cliente.cedula,cliente.correoElectronico,cliente.celular FROM cliente INNER JOIN cuentas ON cuentas.idCliente = cliente.idCliente WHERE cliente.idCliente=?",
     [idCliente]
   );
   res.send(perfil);
