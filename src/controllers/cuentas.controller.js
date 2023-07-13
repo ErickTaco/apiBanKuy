@@ -61,6 +61,7 @@ export const registroUsuario = async function (req, res) {
     cedula,
     correoElectronico,
   } = req.body;
+
   const [er] = await pool.query(
     "select correoElectronico  from cliente where correoElectronico=?",
     [correoElectronico]
@@ -224,15 +225,26 @@ export const perfil = async function (req, res) {
 export const actulizarInformacion = async function (req, res) {
   const idCliente = req.params.idCliente;
   const { celular, correoElectronico } = req.body;
-  await pool.query(
-    `UPDATE cliente SET celular = ?, correoElectronico =? WHERE cliente.idCliente = ?`,
-    [celular, correoElectronico, idCliente]
+
+  const [er] = await pool.query(
+    "select correoElectronico  from cliente where correoElectronico=?",
+    [correoElectronico]
   );
 
-  await pool.query(`UPDATE login SET correo = ? WHERE login.idCliente  = ?`, [
-    correoElectronico,
-    idCliente,
-  ]);
+  if (er.length <= 0) {
+    await pool.query(
+      `UPDATE cliente SET celular = ?, correoElectronico =? WHERE cliente.idCliente = ?`,
+      [celular, correoElectronico, idCliente]
+    );
 
-  res.send("ecitoso");
+    await pool.query(`UPDATE login SET correo = ? WHERE login.idCliente  = ?`, [
+      correoElectronico,
+      idCliente,
+    ]);
+
+    res.send("ecitoso");
+  } else {
+    console.log("correo electronico ya registrado");
+    res.status(404).json({ mesanje: "correo electronico ya registradonpm" });
+  }
 };
