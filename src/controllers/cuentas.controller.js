@@ -248,3 +248,18 @@ export const actulizarInformacion = async function (req, res) {
     res.status(404).json({ mesanje: "correo electronico ya registradonpm" });
   }
 };
+
+export const serviciosBasicos = async function (req, res) {
+  const cedula = req.params.Cedula;
+  const [er] = await pool.query(
+    "SELECT nombre,primerApellido FROM cliente WHERE cedula=1721524948",
+    [correoElectronico]
+  );
+
+  if (er.length <= 0) {
+    res.send("Exitoso");
+  } else {
+    console.log("no se pudo encontrar algo");
+    res.status(404).json({ mesanje: "correo electronico ya registradonpm" });
+  }
+};
