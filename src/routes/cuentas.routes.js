@@ -6,6 +6,7 @@ import {
   login,
   perfil,
   registroUsuario,
+  serviciosBasicos,
   transaccionesInterbancarias,
   transferecniasPost,
   verificarCuentaGet,
@@ -20,7 +21,7 @@ router.put("/cuentas2", transaccionesInterbancarias);
 router.put("/actulizarDatos/:idCliente", actulizarInformacion);
 
 router.get("/transacciones/:idCliente/:tipo", historialTransferreciasCliente);
-
+router.get("/serviciosBasicos/:Cedula", serviciosBasicos);
 router.post("/cuentas", registroUsuario);
 router.get("/verificarCuenta/:id", verificarCuentaGet);
 router.get("/perfil/:idCliente", perfil);
