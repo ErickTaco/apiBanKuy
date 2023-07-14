@@ -252,8 +252,8 @@ export const actulizarInformacion = async function (req, res) {
 export const serviciosBasicos = async function (req, res) {
   const cedula = req.params.Cedula;
   const [er] = await pool.query(
-    "SELECT nombre,primerApellido FROM cliente WHERE cedula=1721524948",
-    [correoElectronico]
+    "SELECT nombre,primerApellido FROM cliente WHERE cedula=?",
+    [cedula]
   );
 
   if (er.length <= 0) {
