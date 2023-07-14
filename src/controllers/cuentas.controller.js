@@ -256,10 +256,5 @@ export const serviciosBasicos = async function (req, res) {
     [cedula]
   );
 
-  if (er.length <= 0) {
-    res.send("Exitoso");
-  } else {
-    console.log("no se pudo encontrar algo");
-    res.status(404).json({ mesanje: "correo electronico ya registradonpm" });
-  }
+  res.send(er);
 };
