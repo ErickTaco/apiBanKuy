@@ -208,6 +208,14 @@ export const historialTransferreciasCliente = async function (req, res) {
       "select transaccionentrada.idTransaccion,transaccionentrada.idCuentaOrigen, transaccionentrada.idCuentaDestino AS idcuentaDestino, (SELECT cliente.nombre FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cuentas.idCuenta=idcuentaDestino) AS nombre,(SELECT cliente.primerApellido FROM cuentas INNER JOIN cliente ON cuentas.idCliente = cliente.idCliente WHERE cuentas.idCuenta=idcuentaDestino) AS primerApellido,transaccionentrada.monto, transaccionentrada.fechaTransaccion from transaccionentrada WHERE transaccionentrada.idCuentaOrigen=?",
       [idCliente]
     );
+
+    res.send(respuesta);
+  } else if (tipo == "servicio") {
+    const [respuesta] = await pool.query(
+      "select * from transaccionesinterbancarias where idCuentaOrigen=? and banco=Luz or banco=Agua ",
+      [idCliente]
+    );
+
     res.send(respuesta);
   }
 };
@@ -260,7 +268,7 @@ export const serviciosBasicos = async function (req, res) {
 };
 
 export const pagoServicio = async function (req, res) {
-  const { cuentaOrigen, cuentaDestino, monto, servicio } = req.body;
+  const { cuentaOrigen, monto, cuentaDestino, banco } = req.body;
 
   await pool.query(`UPDATE cuentas SET monto= monto - ? WHERE idCuenta = ? `, [
     monto,
@@ -269,7 +277,7 @@ export const pagoServicio = async function (req, res) {
 
   await pool.query(
     "insert into transaccionesinterbancarias(idCuentaOrigen,idCuentaDestino,monto,idTipo,banco) values(?,?,?,?,?) ",
-    [cuentaOrigen, cuentaDestino, monto, "salida", servicio]
+    [cuentaOrigen, cuentaDestino, monto, "salida", banco]
   );
   res.send("ecitoso");
 };
