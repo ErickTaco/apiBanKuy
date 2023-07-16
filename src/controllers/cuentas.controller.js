@@ -212,7 +212,7 @@ export const historialTransferreciasCliente = async function (req, res) {
     res.send(respuesta);
   } else if (tipo == "servicio") {
     const [respuesta] = await pool.query(
-      "select * from transaccionesinterbancarias where idCuentaOrigen=? and banco=luz or banco=Agua",
+      "select * from transaccionesinterbancarias where idCuentaOrigen=? and banco=Luz",
       [idCliente]
     );
 
