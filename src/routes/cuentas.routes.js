@@ -22,7 +22,7 @@ router.put("/actulizarDatos/:idCliente", actulizarInformacion);
 
 router.get("/transacciones/:idCliente/:tipo", historialTransferreciasCliente);
 router.get("/serviciosBasicos/:Cedula", serviciosBasicos);
-router.get("/pagoServicios/:Cedula", serviciosBasicos);
+router.put("/pagoServicios", serviciosBasicos);
 
 router.post("/cuentas", registroUsuario);
 router.get("/verificarCuenta/:id", verificarCuentaGet);
