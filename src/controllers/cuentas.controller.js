@@ -258,3 +258,18 @@ export const serviciosBasicos = async function (req, res) {
 
   res.send(er);
 };
+
+export const pagoServicio = async function (req, res) {
+  const { cuentaOrigen, cuentaDestino, monto, servicio } = req.body;
+
+  await pool.query(`UPDATE cuentas SET monto= monto - ? WHERE idCuenta = ? `, [
+    monto,
+    cuentaOrigen,
+  ]);
+
+  await pool.query(
+    "insert into transaccionesinterbancarias(idCuentaOrigen,idCuentaDestino,monto,idTipo,banco) values(?,?,?,?,?) ",
+    [cuentaOrigen, cuentaDestino, monto, "salida", servicio]
+  );
+  res.send("ecitoso");
+};
